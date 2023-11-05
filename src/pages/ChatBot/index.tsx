@@ -1,23 +1,27 @@
 import { Text, View } from 'react-native'
 import React, { useState } from 'react'
-import { GiftedChat } from 'react-native-gifted-chat'
+import { GiftedChat, Send } from 'react-native-gifted-chat'
 import axios from 'axios'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native'; 
+
 
 
 export default function ChatBot() {
   const [messages, setMessages] = useState([])
-  const MY_API_KEY = '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'
+  const MY_API_KEY = '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'
 
   const handleSend = async (newMessages = []) => {
     try {
       // Obtenha a mensagem do usuário
       const userMessage = newMessages[0];
-  
+
       // Adicione a mensagem do usuário ao estado de mensagens
       setMessages(previousMessages => GiftedChat.append(previousMessages, userMessage));
+      // @ts-ignore
       const messageText = userMessage.text.toLowerCase();
       const keywords = ['comida', 'receita', 'food', 'dieta', 'fruta'];
-  
+
       if (!keywords.some(keyword => messageText.includes(keyword))) {
         const botMessage = {
           _id: new Date().getTime() + 1,
@@ -28,11 +32,11 @@ export default function ChatBot() {
             name: 'Gerador de Receitas'
           }
         };
-  
+        // @ts-ignore
         setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
         return;
       }
-  
+
       const response = await axios.post(
         'https://api.openai.com/v1/engines/text-davinci-003/completions',
         {
@@ -48,7 +52,7 @@ export default function ChatBot() {
           }
         }
       );
-  
+
       console.log(response.data);
       const recipe = response.data.choices[0].text.trim();
       const botMessage = {
@@ -60,11 +64,16 @@ export default function ChatBot() {
           name: 'Gerador de Receitas',
         }
       };
-  
+      // @ts-ignore
       setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
+      const navigation = useNavigation();
+        // @ts-ignore
+      navigation.navigate('Historico', { historico: [recipe] });
     } catch (error) {
       console.log(error);
+      // @ts-ignore
       if (error.response && error.response.status === 429) {
+        // @ts-ignore
         const retryAfter = error.response.headers['retry-after'];
         if (retryAfter) {
           const waitTime = parseInt(retryAfter, 10) * 1000;
@@ -76,12 +85,11 @@ export default function ChatBot() {
       }
     }
   };
-  
+
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#3C393F' }}>
       <View style={{
-        backgroundColor: '#f5f5f5',
         padding: 10,
         alignItems: 'center',
         justifyContent: 'center',
@@ -89,13 +97,18 @@ export default function ChatBot() {
         marginTop: 40,
         marginBottom: 5,
       }}>
-        <Text style={{ fontSize: 32, fontWeight: 'bold' }}>
+        <Text style={{ fontSize: 32, fontWeight: 'bold', backgroundColor: '#3C393F' }}>
           Gerador de Receitas
         </Text>
       </View>
-      <GiftedChat messages={messages} onSend={newMessages => handleSend(newMessages)} user={{ _id: 1 }} />
-
-
+      <GiftedChat messages={messages} onSend={newMessages => handleSend(newMessages)} user={{ _id: 1 }} placeholder='Gere a sua receita..' renderSend={props => (
+        <Send {...props}>
+          <View style={{ marginRight: 10, marginBottom: 5 }}>
+            <Icon name="arrow-right" size={24} color="#010101" />
+          </View>
+        </Send>
+      )}
+      />
     </View>
   );
 }
