@@ -10,8 +10,8 @@ export default function Home() {
     <View style={styles.container}>
       <View style={styles.containerLogo}>
         <Animatable.Image source={require('../../assets/logo2.png')}
-         animation="flipInY"
-         style={{ width: '100%', height: 300 }}
+          animation="flipInY"
+          style={{ width: '100%', height: 300 }}
           resizeMode='contain'
         />
       </View>
@@ -19,7 +19,10 @@ export default function Home() {
       <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
         <Text style={styles.title}>Gere sua receita de comida o mais rápido possível!</Text>
         <Text style={styles.text}>Faça o login para começar</Text>
-        <TouchableOpacity onPress={()=> navigation.navigate('SignIn')} style={styles.button}>
+
+        <TouchableOpacity
+          // @ts-ignore
+          onPress={() => navigation.navigate('SignIn')} style={styles.button}>
           <Text style={styles.buttonText}>Acessar</Text>
         </TouchableOpacity>
       </Animatable.View>
@@ -35,43 +38,43 @@ const styles = StyleSheet.create({
     backgroundColor: "#3C393F"
   },
   containerLogo: {
-    flex:2,
+    flex: 2,
     backgroundColor: "#3C393F",
     justifyContent: 'center',
     alignItems: 'center'
-    
+
   },
   containerForm: {
-    flex:1,
-    backgroundColor:'#FFF',
+    flex: 1,
+    backgroundColor: '#FFF',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    paddingStart:'5%',
-    paddingEnd:'5%'
+    paddingStart: '5%',
+    paddingEnd: '5%'
 
   },
   title: {
-    fontSize:24,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 28, 
+    marginTop: 28,
     marginBottom: 12,
   },
   text: {
     color: '#a1a1a1a1',
   },
-  button:{
+  button: {
     position: 'absolute',
-    backgroundColor:'#3C393F',
+    backgroundColor: '#3C393F',
     borderRadius: 50,
     paddingVertical: 8,
     width: '60%',
     alignSelf: 'center',
     bottom: '15%',
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  buttonText:{
-    fontSize:  18,
+  buttonText: {
+    fontSize: 18,
     color: '#FFF',
     fontWeight: 'bold',
   }

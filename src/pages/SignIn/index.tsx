@@ -21,11 +21,15 @@ export default function SignIn() {
         <Text style={styles.title}>Senha</Text>
         <TextInput secureTextEntry={true} placeholder="Sua senha" style={styles.input} />
 
-        <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('ChatBot')}>
+        <TouchableOpacity style={styles.button}
+          // @ts-ignore
+          onPress={() => navigation.navigate('ChatBot')}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonRegister}>
+        <TouchableOpacity style={styles.buttonRegister}
+          // @ts-ignore
+          onPress={() => navigation.navigate('CreateAccount')}>
           <Text style={styles.registerText}>Não possui uma conta? Cadastre-se</Text>
         </TouchableOpacity>
       </Animatable.View>
@@ -51,15 +55,15 @@ const styles = StyleSheet.create({
   },
   containerForm: {
     backgroundColor: '#fff',
-    flex:1,
-    borderTopLeftRadius:25,
+    flex: 1,
+    borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingStart: '5%',
-    paddingEnd:'5%'
+    paddingEnd: '5%'
   },
   title: {
-    fontSize:20,
-    marginTop:28,
+    fontSize: 20,
+    marginTop: 28,
   },
   input: {
     borderBottomWidth: 1,
@@ -69,23 +73,23 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#3C393F',
-    width:  '100%',
-    borderRadius:4,
-    paddingVertical:8,
+    width: '100%',
+    borderRadius: 4,
+    paddingVertical: 8,
     marginTop: 14,
     justifyContent: 'center',
-    alignItems:'center'
+    alignItems: 'center'
   },
   buttonText: {
-    color: '#FFF', 
+    color: '#FFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
   buttonRegister: {
     marginTop: 14,
-    alignSelf:'center'
+    alignSelf: 'center'
   },
   registerText: {
-    color:'#a1a1a1a1'
+    color: '#a1a1a1a1'
   }
 })

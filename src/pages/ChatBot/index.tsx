@@ -1,22 +1,22 @@
-import { Text, View } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { GiftedChat, Send } from 'react-native-gifted-chat'
 import axios from 'axios'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function ChatBot() {
   const [messages, setMessages] = useState([])
-  const MY_API_KEY = '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'
+  const MY_API_KEY = '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'
 
   const handleSend = async (newMessages = []) => {
     try {
-      // Obtenha a mensagem do usuário
+
       const userMessage = newMessages[0];
 
-      // Adicione a mensagem do usuário ao estado de mensagens
+   
       setMessages(previousMessages => GiftedChat.append(previousMessages, userMessage));
       // @ts-ignore
       const messageText = userMessage.text.toLowerCase();
@@ -67,7 +67,7 @@ export default function ChatBot() {
       // @ts-ignore
       setMessages(previousMessages => GiftedChat.append(previousMessages, botMessage));
       const navigation = useNavigation();
-        // @ts-ignore
+      // @ts-ignore
       navigation.navigate('Historico', { historico: [recipe] });
     } catch (error) {
       console.log(error);
@@ -88,28 +88,47 @@ export default function ChatBot() {
 
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#3C393F' }}>
-      <View style={{
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        marginTop: 40,
-        marginBottom: 5,
-      }}>
-        <Text style={{ fontSize: 32, fontWeight: 'bold', backgroundColor: '#3C393F' }}>
-          Gerador de Receitas
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Gerador de Receitas</Text>
       </View>
-      <GiftedChat messages={messages} onSend={newMessages => handleSend(newMessages)} user={{ _id: 1 }} placeholder='Gere a sua receita..' renderSend={props => (
-        <Send {...props}>
-          <View style={{ marginRight: 10, marginBottom: 5 }}>
-            <Icon name="arrow-right" size={24} color="#010101" />
-          </View>
-        </Send>
-      )}
+      <GiftedChat
+        messages={messages}
+        // @ts-ignore
+        onSend={newMessages => handleSend(newMessages)}
+        user={{ _id: 1 }}
+        placeholder='Gere a sua receita..'
+        renderSend={props => (
+          <Send {...props}>
+            <View style={styles.sendButton}>
+              <Icon name="arrow-right" size={24} color="#010101" />
+            </View>
+          </Send>
+        )}
       />
     </View>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#3C393F',
+  },
+  header: {
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    marginBottom: 5,
+  },
+  headerText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  sendButton: {
+    marginRight: 10,
+    marginBottom: 5,
+  },
+});
