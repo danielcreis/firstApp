@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function ChatBot() {
   const [messages, setMessages] = useState([])
-  const MY_API_KEY = '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'
+  const MY_API_KEY = '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'
 
   const handleSend = async (newMessages = []) => {
     try {
@@ -53,7 +53,7 @@ export default function ChatBot() {
         }
       );
 
-      console.log(response.data);
+      
       const recipe = response.data.choices[0].text.trim();
       const botMessage = {
         _id: new Date().getTime() + 1,
@@ -70,17 +70,17 @@ export default function ChatBot() {
       // @ts-ignore
       navigation.navigate('Historico', { historico: [recipe] });
     } catch (error) {
-      console.log(error);
+     
       // @ts-ignore
       if (error.response && error.response.status === 429) {
         // @ts-ignore
         const retryAfter = error.response.headers['retry-after'];
         if (retryAfter) {
           const waitTime = parseInt(retryAfter, 10) * 1000;
-          console.log(`Aguarde ${waitTime / 1000} segundos antes de tentar novamente.`);
+          
           setTimeout(() => handleSend(newMessages), waitTime);
         } else {
-          console.log('Limite de taxa excedido. Aguarde um tempo antes de tentar novamente.');
+          
         }
       }
     }

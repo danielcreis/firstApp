@@ -26,10 +26,13 @@ const Users = () => {
     try {
       const usersCollection = collection(db, 'users');
       const usersSnapshot = await getDocs(usersCollection);
+      // @ts-ignore
       const usersData = [];
       usersSnapshot.forEach((doc) => {
         usersData.push({ id: doc.id, ...doc.data() });
       });
+      // @ts-ignore
+
       setUsers(usersData);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -39,6 +42,7 @@ const Users = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+  // @ts-ignore
 
   const handleDeleteUser = async (userId) => {
     try {
@@ -48,6 +52,7 @@ const Users = () => {
       console.error('Error deleting user:', error);
     }
   };
+  // @ts-ignore
 
   const handleOpenEditDialog = (user) => {
     setEditingUser(user);
@@ -60,7 +65,8 @@ const Users = () => {
 
   const handleSaveEdit = async () => {
     try {
-      
+      // @ts-ignore
+
       await updateDoc(doc(db, 'users', editingUser.id), {
         username: editedUsername,
         email: editedEmail,
@@ -68,7 +74,7 @@ const Users = () => {
         confirmPassword: confirmPassword,
       });
 
-     
+
       setEditingUser({});
       fetchUsers();
       setEditModalVisible(false);
@@ -76,6 +82,7 @@ const Users = () => {
       console.error('Error updating user:', error);
     }
   };
+  // @ts-ignore
 
   const renderItem = ({ item }) => (
     <View style={styles.userRow}>

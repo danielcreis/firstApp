@@ -33,7 +33,6 @@ export default function Home() {
       confirmPassword: confirmPassword
     })
       .then(() => {
-        console.log('Criado com sucesso');
 
         setName('');
         setEmail('');
@@ -44,7 +43,6 @@ export default function Home() {
         navigation.navigate('Users');
       })
       .catch((error) => {
-        console.log(error);
       });
   }
 
